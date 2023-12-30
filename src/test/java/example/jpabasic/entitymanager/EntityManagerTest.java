@@ -3,6 +3,7 @@ package example.jpabasic.entitymanager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import example.jpabasic.domain.Member;
+import example.jpabasic.domain.Post;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -83,5 +84,17 @@ public class EntityManagerTest {
         em.flush();
 
         assertThat(findMember.getUsername()).isEqualTo("USER2");
+    }
+
+    @Test
+    void identity_strategy() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+
+        Post post = new Post();
+        post.setTitle("title");
+        em.persist(post);
+        // PK strategy 가 IDENTITY 경우 INSERT 쿼리 발생
     }
 }
