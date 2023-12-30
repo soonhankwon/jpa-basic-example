@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import example.jpabasic.domain.Member;
 import example.jpabasic.domain.Post;
+import example.jpabasic.domain.SequencePost;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -96,5 +97,17 @@ public class EntityManagerTest {
         post.setTitle("title");
         em.persist(post);
         // PK strategy 가 IDENTITY 경우 INSERT 쿼리 발생
+    }
+
+    @Test
+    void sequence_strategy() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+
+        SequencePost sequencePost = new SequencePost();
+        em.persist(sequencePost);
+
+        assertThat(sequencePost.getId()).isEqualTo(1);
     }
 }
