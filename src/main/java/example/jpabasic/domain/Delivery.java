@@ -5,21 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.OneToOne;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name = "delivery_id")
     private Long id;
 
-    private String name;
+    private String city;
 
-    private int price;
+    private String zipcode;
 
-    private int stockQuantity;
+    private String status;
+
+    @OneToOne(mappedBy = "delivery")
+    private Order order;
 }
